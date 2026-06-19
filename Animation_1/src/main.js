@@ -18,7 +18,7 @@ const interval = setInterval(() => {
     clearInterval(interval)
     LoadingAnimation()
   }
-}, 20)
+}, 40)
 
 
 
