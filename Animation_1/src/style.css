@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  overflow: hidden;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- LOADER --- */
+.loader {
+  position: fixed;
+  inset: 0;
+  background-color: #0d0d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loadercount h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.loader-bar-wrapper {
+  width: 200px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.loader-bar {
+  width: 0%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 0 10px white;
+}
+
+/* --- MAIN CONTENT --- */
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4);
+}
+
+/* --- TEXT CONTAINER --- */
+.overlaytext {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  padding: 0 20px;
+  /* Prevents text from touching the edges of mobile screens */
+}
+
+.heading {
+  overflow: hidden;
+  /* Necessary for GSAP reveal */
+}
+
+.heading h1 {
+  font-family: 'Playfair Display', serif;
+  /* min 1.8rem, scales with width, max 7rem */
+  font-size: clamp(1.8rem, 8vw, 7rem);
+  color: white;
+  text-transform: uppercase;
+  line-height: 1.1;
+  /* Tighter line height looks better for big headings */
+  font-weight: 900;
+  margin: 0;
+}
+
+.subheading {
+  overflow: hidden;
+  /* Necessary for GSAP reveal */
+  margin-top: 10px;
+}
+
+.subheading h2 {
+  font-family: 'Inter', sans-serif;
+  /* min 0.6rem, max 1.1rem */
+  font-size: clamp(0.6rem, 1.5vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  font-weight: 300;
+
+  /* On Desktop: 0.5em looks great. On Mobile: It's too wide. */
+  letter-spacing: 0.5em;
+  /* This padding-left centers the text perfectly because letter-spacing 
+     adds space to the right of every letter. */
+  padding-left: 0.5em;
+}
+
+/* --- MOBILE SPECIFIC FIXES --- */
+@media (max-width: 600px) {
+  .subheading h2 {
+    letter-spacing: 0.2em;
+    /* Shrink spacing on mobile so it doesn't wrap weirdly */
+    padding-left: 0.2em;
+    line-height: 1.5;
+  }
+}
