@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: apple;
+}
+
+
+#app{
+   width: 100%;
+    height: 100%;
+    background-color: rgb(220, 233, 245);
+}
+
+
+
+.page1{
+   width: 100%;
+    height: 100%;
+    background-color: rgb(164, 203, 241);
+     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.page2{
+   width: 100%;
+    height: 100%;
+    background-color: rgb(61, 149, 238);
+     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.page3{
+   width: 100%;
+    height: 100%;
+    background-color: rgb(1, 59, 117);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+img{
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}

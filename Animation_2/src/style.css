@@ -1,0 +1,285 @@
+/* --- VARIABLES & RESET --- */
+:root {
+  --bg-color: #131111;
+  --text-color: #ffffff;
+  --accent-color: #e2ff00;
+  /* Neon yellow accent */
+  --gray: #666;
+  --font-main: 'Inter', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* --- LOADER --- */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-content {
+  width: 300px;
+  text-align: center;
+}
+
+.loading-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gray);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.loadercount h1 {
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.loader-bar-wrapper {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.loader-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-color);
+}
+
+/* --- HERO SECTION (Fixed .container & .background) --- */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* Full screen height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4);
+  /* Darken for text readability */
+}
+
+/* --- TEXT CONTAINER --- */
+.overlaytext {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  padding: 0 20px;
+  /* Prevents text from touching the edges of mobile screens */
+}
+
+.heading {
+  overflow: hidden;
+  /* Necessary for GSAP reveal */
+}
+
+.heading h1 {
+  font-family: 'Playfair Display', serif;
+  /* min 1.8rem, scales with width, max 7rem */
+  font-size: clamp(1.8rem, 8vw, 7rem);
+  color: white;
+  text-transform: uppercase;
+  line-height: 1.1;
+  /* Tighter line height looks better for big headings */
+  font-weight: 900;
+  margin: 0;
+}
+
+/* Update these specific parts in your style.css */
+
+.subheading {
+  overflow: hidden;
+  margin-top: 10px;
+  /* Add this to help debug - it ensures the container has height */
+  display: flex;
+  justify-content: center;
+}
+
+.subheading h2 {
+  display: block;
+  /* Ensure it's a block for yPercent to work accurately */
+  margin: 0;
+  /* Remove default browser margins */
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.6rem, 1.5vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+
+  /* Initial state: make it invisible until GSAP kicks in 
+     to prevent "flashing" before the loader finishes */
+  visibility: inherit;
+}
+
+/* --- SECTION IMAGES FIX --- */
+.sectionImages {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100vh;
+  width: 600vw;
+  /* 5 images + 1 text div = 6 items */
+  overflow: hidden;
+  background: #000;
+}
+
+.sectionImages>* {
+  width: 100vw;
+  /* Each child is exactly 1 screen wide */
+  height: 100vh;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.travelText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  width: 100vw;
+  height: 100vh;
+}
+
+.text-wrapper {
+  text-align: center;
+}
+
+.main-title {
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 900;
+  line-height: 1;
+  margin: 0;
+  overflow: hidden;
+  /* Important for the reveal */
+  color: var(--accent-color);
+  /* The neon yellow from your variables */
+  text-transform: uppercase;
+}
+
+.line {
+  width: 0%;
+  /* Start at 0 for animation */
+  height: 2px;
+  background: white;
+  margin: 20px auto;
+}
+
+.small-title {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: white;
+  opacity: 1;
+  /* Start hidden */
+}
+
+/* --- BIG IMAGE SECTION FIX --- */
+.bigImg {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Remove any margin-top if you have one */
+}
+
+.bigImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.5);
+}
+
+
+
+.herotext {
+  position: absolute;
+  top: 50%;
+  left: 130vw;
+  transform: translate(-50%, -50%);
+  z-index: 1111;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.herotext h1 {
+  font-size: 30vw;
+  text-transform: uppercase;
+  font-size: 30vw;
+  text-transform: uppercase;
+  margin: 0;
+  display: inline-block;
+  color: #000000;
+  /* Makes the inside of the letters see-through */
+  -webkit-text-stroke: 6px white;
+}
+
+
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+  .sectionImages img {
+    height: 50vh;
+    /* Shorter images on mobile */
+  }
+
+  .travelText {
+    padding: 0 40px;
+  }
+
+  .bigImg {
+    height: 70vh;
+
+  }
+}
