@@ -267,93 +267,96 @@ body {
 
 
 
-/* --- COMPLETE MOBILE FIX --- */
+/* --- ULTIMATE MOBILE ANIMATION FIX --- */
 
 @media (max-width: 768px) {
-  /* 1. FORCE LAYOUT STABILITY FOR GSAP */
-  /* Pinning animations REQUIRE 100vh to calculate markers correctly */
-  .container,
-  .sectionImages,
-  .sectionImages > *,
-  .travelText,
-  .bigImg {
-    height: 100vh !important;
-    height: 100dvh !important; /* Better for mobile browser bars */
-    min-height: 100vh !important;
+  /* 1. PREVENT MOBILE BOUNCE/REFRESH GLITCHES */
+  html, body {
+    /* Prevents the "pull-to-refresh" and address bar jumping that breaks GSAP pins */
+    overscroll-behavior-y: none; 
+    height: 100%;
+    overflow-x: hidden;
   }
 
-  /* 2. HORIZONTAL SCROLL FIX */
-  /* We must force 600vw so the JS math (totalItems - 1) works perfectly */
+  /* 2. FORCE STABLE HEIGHTS */
+  .container, 
+  .sectionImages, 
+  .sectionImages > *, 
+  .travelText, 
+  .bigImg {
+    /* Use svh (Small Viewport Height) to ignore the address bar changes */
+    height: 100vh !important;
+    height: 100svh !important; 
+    min-height: 100svh !important;
+    position: relative;
+  }
+
+  /* 3. HORIZONTAL SCROLL FIX */
   .sectionImages {
-    width: 600vw !important;
+    width: 600vw !important; /* Keep this to match your JS logic */
     display: flex !important;
     flex-wrap: nowrap !important;
     overflow: hidden !important;
+    /* Helps hardware acceleration for smoother mobile scroll */
+    will-change: transform; 
   }
 
-  .sectionImages > * {
-    width: 100vw !important;
-    flex-shrink: 0 !important;
-    object-fit: cover;
+  /* 4. FIX "HIDDEN" ANIMATIONS ON SCROLL DOWN */
+  /* This ensures elements are visible and ready for GSAP to take over */
+  .main-title, .small-title, .herotext h1 {
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
-  /* 3. TRAVEL TEXT OVERRIDES */
   .main-title {
-    font-size: 15vw !important; /* Scale down so it doesn't overflow 100vw */
-    display: block;
+    font-size: 15vw !important;
+    line-height: 1.1;
+  }
+
+  /* 5. BIG IMAGE & PINNED TEXT ("Experiences") */
+  .bigImg {
     width: 100%;
-    text-align: center;
+    overflow: hidden !important;
   }
 
-  .line {
-    width: 60% !important; /* Make line visible on mobile */
-    margin: 20px auto;
-  }
-
-  /* 4. BIG IMAGE & PINNED TEXT FIX */
   .herotext {
-    /* Keep left: 130vw as per JS logic, but handle width */
-    width: auto;
-    white-space: nowrap;
+    /* Pull the starting position closer for mobile */
+    left: 110vw !important; 
+    width: 100%;
+    pointer-events: none;
   }
 
   .herotext h1 {
-    /* Reduce stroke so text is readable on mobile */
-    -webkit-text-stroke: 2px white !important;
-    font-size: 45vw !important;
-    line-height: 1;
-    display: block !important;
-    white-space: nowrap !important; /* Prevent text from stacking vertically */
-    color: transparent !important; /* Ensures the hollow effect works */
+    /* Essential: 6px stroke looks like a solid white block on mobile */
+    -webkit-text-stroke: 2px white !important; 
+    font-size: 40vw !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    color: transparent !important;
+    text-align: center;
+    will-change: transform;
   }
 
-  /* 5. HERO HEADING FIX */
+  /* 6. HERO OVERRIDES */
   .heading h1 {
-    font-size: 2.8rem !important;
-    padding: 0 10px;
+    font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
+    padding: 0 15px;
   }
 
   .subheading h2 {
     font-size: 0.8rem !important;
     padding: 0 20px;
     letter-spacing: 0.1em;
+    line-height: 1.4;
   }
 
-  /* Adjust loader for mobile */
   .loadercount h1 {
     font-size: 3rem !important;
   }
 }
 
-/* Landscape and extra small phone tweaks */
-@media (max-width: 480px) {
-  .heading h1 {
-    font-size: 2.2rem !important;
-  }
-  .main-title {
-    font-size: 18vw !important;
-  }
-  .herotext h1 {
-    -webkit-text-stroke: 1.5px white !important;
-  }
+/* Landscape fix */
+@media (max-height: 500px) and (orientation: landscape) {
+  .heading h1 { font-size: 10vh !important; }
+  .herotext h1 { font-size: 60vh !important; }
 }
