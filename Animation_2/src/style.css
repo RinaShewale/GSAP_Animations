@@ -267,51 +267,52 @@ body {
 
 
 
-
-
-/* --- RESPONSIVE OVERRIDES --- */
-/* This section handles mobile without changing your desktop logic or JS */
+/* --- FINAL RESPONSIVE FIX --- */
 
 @media (max-width: 768px) {
-  /* 1. Loader - scale down for small screens */
-  .loadercount h1 {
-    font-size: 3rem;
-  }
-  .loader-content {
-    width: 80%;
-  }
-
-  /* 2. Hero Section - ensure text stays within bounds */
-  .heading h1 {
-    font-size: clamp(2rem, 12vw, 4rem);
-    line-height: 1.2;
-  }
-  
-  .subheading h2 {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+  /* 1. FIX: GSAP Pinning requires 100vh to calculate correctly */
+  .sectionImages, 
+  .sectionImages > *, 
+  .travelText, 
+  .bigImg, 
+  .container {
+    height: 100vh !important; /* Overriding the 50vh/70vh from original code */
+    min-height: 100vh;
   }
 
-  /* 3. Horizontal Scroll Section */
-  /* We MUST keep width: 600vw so your GSAP (totalItems - 1) math stays perfect */
+  /* 2. FIX: Horizontal Width */
+  /* Must keep 600vw so the JS math (totalItems - 1) works */
   .sectionImages {
-    height: 100vh;
-    width: 600vw; 
+    width: 600vw !important;
+    display: flex;
+    flex-wrap: nowrap;
   }
 
-  /* Ensure the images fill the screen height correctly */
   .sectionImages > * {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
+    width: 100vw !important;
+    flex-shrink: 0;
   }
 
-  /* 4. Travel Text (The text inside the horizontal scroll) */
+  /* 3. FIX: Text Stroke & Size */
+  /* 6px stroke makes text invisible/blobby on mobile */
+  .herotext h1 {
+    -webkit-text-stroke: 2px white !important;
+    font-size: 40vw !important;
+    white-space: nowrap;
+    will-change: transform; /* Helps mobile performance */
+  }
+
+  /* 4. FIX: Position for Mobile */
+  /* If 130vw is too far for mobile scroll distance, we nudge it */
+  .herotext {
+    left: 110vw; 
+    gap: 10px;
+  }
+
+  /* 5. Travel Text scaling */
   .main-title {
-    /* Scale the neon text so it fits on one/two lines on mobile */
-    font-size: 15vw !important; 
-    width: 100%;
-    display: block;
+    font-size: 15vw !important;
+    line-height: 1;
   }
 
   .small-title {
@@ -319,37 +320,25 @@ body {
     letter-spacing: 2px;
   }
 
-  /* 5. Big Image & Stroke Text (The GSAP Pinning Section) */
-  .bigImg {
-    height: 100vh; /* Keep as 100vh for the GSAP pin to look natural */
+  .line {
+    width: 40% !important; /* Allow the line to show on mobile */
+    margin: 15px auto;
   }
 
-  .herotext {
-    /* Reset left if needed, but keeping 130vw as per your original start point */
-    gap: 10px;
-  }
-
-  .herotext h1 {
-    /* CRITICAL: 6px stroke is too thick for mobile, it makes letters look like blobs */
-    -webkit-text-stroke: 2px white !important; 
-    font-size: 45vw !important; /* Scale font up to be "Big" on mobile */
-    white-space: nowrap; /* Prevents text from wrapping during the GSAP animation */
+  /* 6. Header Scaling */
+  .heading h1 {
+    font-size: 3rem !important;
   }
 }
 
-/* Extra small devices */
+/* Landscape fix for small phones */
 @media (max-width: 480px) {
-  .heading h1 {
-    font-size: 2.2rem;
+  .herotext h1 {
+    -webkit-text-stroke: 1.5px white !important;
+    font-size: 50vw !important;
   }
   
-  /* Travel Text even smaller for very narrow phones */
-  .main-title {
-    font-size: 18vw !important;
-  }
-
-  .line {
-    margin: 10px auto;
-    width: 50px; /* Use a fixed width for the line on mobile */
+  .loadercount h1 {
+    font-size: 2.5rem;
   }
 }
