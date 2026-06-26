@@ -19,7 +19,6 @@ body {
   font-family: 'Inter', -apple-system, sans-serif;
   color: var(--fg);
   overflow-x: hidden;
-  /* Subtle grain texture */
   background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
 }
 
@@ -43,12 +42,12 @@ body {
   margin: 0;
   line-height: 1;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+  padding: 0 20px;
 }
 
-/* Container for the masking effect */
 .titlechars {
   display: inline-block;
-  /* This is the key for the "mask" reveal */
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
 
@@ -104,36 +103,32 @@ body {
 .card:hover img {
   filter: grayscale(100%) brightness(1.2);
 }
-/* Update these specific sections in your style.css */
 
 .drag_container {
   width: 100%;
-  height: 600px; /* Adjust this to your preferred height */
+  height: 600px;
   background-color: #050505;
   border: 1px solid var(--gray-border);
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative; /* Essential for containing the absolute image */
+  position: relative;
   overflow: hidden;
 }
 
-/* Force the image to fill the entire container when it lands here */
 .drag_container img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover; /* Ensures no black bars, fills the area */
+  object-fit: cover;
   filter: grayscale(100%) brightness(0.8);
 }
 
-
-
 .drag_container, .card {
-  perspective: 1000px; /* Essential for the 3D rotationY/rotationX to work */
-  overflow: visible;   /* Prevents the image from being cut off while it "lifts" */
+  perspective: 1000px;
+  overflow: visible;
 }
 
 .drag_container img {
@@ -145,19 +140,76 @@ body {
     box-shadow: 0px 20px 40px rgba(0,0,0,0.4);
 }
 
-
-/* Update this in your style.css */
 .drag_container span {
   position: relative;
-  z-index: 10; /* Ensure it stays on top of the image */
-  pointer-events: auto; /* CHANGE THIS FROM NONE TO AUTO */
-  cursor: grab; /* Shows the hand icon */
+  z-index: 10;
+  pointer-events: auto;
+  cursor: grab;
   color: var(--gray-text);
   font-size: 0.7rem;
   letter-spacing: 0.4em;
-  user-select: none; /* Prevents highlighting text while dragging */
+  user-select: none;
 }
 
 .drag_container span:active {
   cursor: grabbing;
+}
+
+/* --- RESPONSIVE QUERIES --- */
+
+@media (max-width: 1024px) {
+  .container {
+    gap: 40px;
+    grid-template-columns: 160px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .string-wrapper {
+    height: 200px;
+  }
+  
+  .string-wrapper h1 {
+    font-size: 10vw; /* Larger font for smaller screens */
+  }
+
+  .container {
+    grid-template-columns: 1fr; /* Stack sidebar and drop zone */
+    padding: 40px 20px;
+    gap: 60px;
+  }
+
+  .section-box {
+    align-items: center; /* Center content for mobile flow */
+  }
+
+  .image-stack {
+    flex-direction: row; /* Horizontal scrolling or wrapping images */
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .drag_container {
+    height: 400px; /* Shorter drop zone for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .string-wrapper {
+    height: 150px;
+  }
+
+  .string-wrapper h1 {
+    font-size: 12vw;
+    letter-spacing: 0.05em;
+  }
+
+  .card {
+    width: 140px;
+    height: 140px;
+  }
+
+  .drag_container {
+    height: 300px;
+  }
 }
