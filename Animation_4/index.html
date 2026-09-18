@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AETHERIA — Minimalist Kinetic Architecture</title>
+  
+  <!-- High-End Editorial & Geometric Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <!-- Custom Fluid Magnetic Cursor -->
+  <div class="custom-cursor-dot" id="cursorDot"></div>
+  <div class="custom-cursor-ring" id="cursorRing"></div>
+
+  <!-- Interactive Ethereal Light Particle Trail Canvas -->
+  <canvas class="particle-canvas" id="particleCanvas"></canvas>
+
+  <!-- Dynamic Click Ripple Container -->
+  <div class="ripple-layer" id="rippleLayer"></div>
+
+  <!-- Loading Screen Preloader (Split Curtain Aperture) -->
+  <div class="loader" id="loader">
+    <div class="loader-bg-panel top-panel"></div>
+    <div class="loader-bg-panel bottom-panel"></div>
+    
+    <div class="loader-content" id="loaderContent">
+      <div class="loader-badge">
+        <span class="loader-dot"></span>
+        <span class="loader-badge-text">KINETIC ARCHITECTURE • GSAP 3.12</span>
+      </div>
+
+      <div class="loader-brand">
+        <span class="brand-letter">A</span>
+        <span class="brand-letter">E</span>
+        <span class="brand-letter">T</span>
+        <span class="brand-letter">H</span>
+        <span class="brand-letter">E</span>
+        <span class="brand-letter">R</span>
+        <span class="brand-letter">I</span>
+        <span class="brand-letter">A</span>
+      </div>
+
+      <div class="loader-progress-wrap">
+        <div class="loader-bar-bg">
+          <div class="loader-bar-fill" id="loaderBar"></div>
+        </div>
+        <div class="loader-meta">
+          <span class="loader-status" id="loaderStatus">Harmonizing light fields...</span>
+          <span class="loader-counter" id="loaderCounter">00%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient Glowing Background Elements (Light Mode) -->
+  <div class="ambient-glow-container">
+    <div class="glow-orb orb-1" id="orb1"></div>
+    <div class="glow-orb orb-2" id="orb2"></div>
+    <div class="glow-orb orb-3" id="orb3"></div>
+    <div class="ambient-grid"></div>
+    <div class="noise-overlay"></div>
+  </div>
+
+  <!-- Main Experience Wrapper -->
+  <div class="page-wrapper" id="pageWrapper">
+    
+    <!-- Navigation Bar -->
+    <header class="navbar" id="navbar">
+      <div class="nav-brand magnetic" data-magnetic>
+        <span class="logo-symbol">✦</span>
+        <span class="logo-text">AETHERIA</span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#kinetic" class="nav-link magnetic" data-magnetic>Kinetic</a>
+        <a href="#chromatics" class="nav-link magnetic" data-magnetic>Chromatics</a>
+        <a href="#spatial" class="nav-link magnetic" data-magnetic>Spatial</a>
+      </nav>
+
+      <div class="nav-cta-wrap">
+        <button class="nav-btn magnetic" data-magnetic id="btnVibe">
+          <span class="btn-indicator"></span>
+          <span class="btn-label" id="vibeLabel">Aura: Lumina Iris</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="hero-section" id="heroSection">
+      <div class="hero-center-content">
+        
+        <!-- Eyebrow Badge -->
+        <div class="hero-pill-badge magnetic" data-magnetic id="heroBadge">
+          <span class="pulse-point"></span>
+          <span class="pill-text">INTERACTIVE GSAP ENGINE • v3.12</span>
+        </div>
+
+        <!-- Interactive Magnetic Headline Words -->
+        <h1 class="hero-headline" id="heroHeadline">
+          <span class="line-wrap">
+            <span class="title-word magnetic-word" data-magnetic>SCULPTING</span> 
+            <span class="title-word gradient-text magnetic-word" data-magnetic>POETRY</span>
+          </span>
+          <span class="line-wrap">
+            <span class="title-word magnetic-word" data-magnetic>IN</span> 
+            <span class="title-word highlight magnetic-word" data-magnetic>MOTION</span>
+          </span>
+        </h1>
+
+        <p class="hero-description" id="heroDesc">
+          A harmonious balance of kinetic spring physics and glassmorphic depth. 
+          Interact with the spatial gyroscope, warp magnetic fields, trigger kinetic shockwaves, 
+          or tune the ambient aura palette in real time.
+        </p>
+
+        <!-- Interactive 3D Concentric Gyroscope Sculpture -->
+        <div class="kinetic-gyro-wrap" id="gyroWrap" title="Click or move cursor to interact with kinetic core">
+          <div class="gyro-core" id="gyroCore">
+            <div class="gyro-ring ring-outer"></div>
+            <div class="gyro-ring ring-middle"></div>
+            <div class="gyro-ring ring-inner"></div>
+            <div class="gyro-jewel" id="gyroJewel">
+              <span class="jewel-sparkle">✦</span>
+            </div>
+          </div>
+          <span class="gyro-caption">KINETIC GYROSCOPE • CLICK TO ACCELERATE</span>
+        </div>
+
+        <!-- Floating Glassmorphic Interactive Studio Dock -->
+        <div class="studio-dock" id="studioDock">
+          <button class="dock-btn primary magnetic" data-magnetic id="btnPulse" title="Trigger Spatial Pulse">
+            <span class="dock-icon">✦</span>
+            <span class="dock-label">Shockwave</span>
+          </button>
+          
+          <button class="dock-btn secondary magnetic" data-magnetic id="btnCycleColor" title="Morph Color Palette">
+            <span class="color-preview-dot"></span>
+            <span class="dock-label">Palette</span>
+          </button>
+
+          <button class="dock-btn secondary magnetic" data-magnetic id="btnGyro" title="Spin Gyroscope">
+            <span class="dock-icon">◎</span>
+            <span class="dock-label">Spin Core</span>
+          </button>
+
+          <button class="dock-btn secondary magnetic" data-magnetic id="btnGravity" title="Toggle Orb Gravitation">
+            <span class="dock-icon">◈</span>
+            <span class="dock-label" id="gravityLabel">Gravity: Float</span>
+          </button>
+
+          <button class="dock-btn ghost magnetic" data-magnetic id="btnReplay" title="Replay Intro Sequence">
+            <span class="reload-icon">↺</span>
+            <span class="dock-label">Replay</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive 3D Tilt Cards Floating in Space -->
+      <div class="showcase-grid" id="showcaseGrid">
+        
+        <!-- Card 1: Kinetic Physics with Live Visualizer Bars -->
+        <article class="interactive-card" data-tilt id="card1">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-header">
+              <span class="card-tag">01 / VELOCITY</span>
+              <span class="card-icon">↗</span>
+            </div>
+            <h3 class="card-title">Kinetic Physics</h3>
+            <p class="card-caption">Interpolated spring damping with real-time vector response and micro-particle drift.</p>
+            
+            <!-- Live Harmonic Equalizer Bars -->
+            <div class="live-equalizer" id="equalizerBars">
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+              <span class="eq-bar"></span>
+            </div>
+
+            <div class="card-metric">
+              <span class="metric-val">120 FPS</span>
+              <span class="metric-label">Interpolation Rate</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Featured Spectral Auras with Interactive Orb Mini-Canvas -->
+        <article class="interactive-card featured" data-tilt id="card2">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-header">
+              <span class="card-tag">02 / CHROMATICS</span>
+              <span class="card-icon">✦</span>
+            </div>
+            <h3 class="card-title">Spectral Auras</h3>
+            <p class="card-caption">Morphing multidimensional light gradients synchronized smoothly through GSAP timelines.</p>
+            
+            <!-- Interactive Mini Aura Preview -->
+            <div class="mini-aura-preview">
+              <div class="mini-aura-orb mini-1"></div>
+              <div class="mini-aura-orb mini-2"></div>
+              <span class="mini-aura-text" id="miniAuraText">Aura: Lumina Iris</span>
+            </div>
+
+            <div class="card-metric">
+              <span class="metric-val">32-BIT</span>
+              <span class="metric-label">Precision Spectrum</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Spatial Depth with Live 3D Tilt Coordinates -->
+        <article class="interactive-card" data-tilt id="card3">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <div class="card-header">
+              <span class="card-tag">03 / DIMENSION</span>
+              <span class="card-icon">◈</span>
+            </div>
+            <h3 class="card-title">Spatial Depth</h3>
+            <p class="card-caption">Reactive multi-plane parallax with 3D perspective deflection and dynamic specular light.</p>
+            
+            <!-- Live Gyro Angle Readout -->
+            <div class="live-angles">
+              <div class="angle-item">
+                <span class="angle-name">PITCH</span>
+                <span class="angle-val" id="anglePitch">0.0°</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-name">ROLL</span>
+                <span class="angle-val" id="angleRoll">0.0°</span>
+              </div>
+              <div class="angle-item">
+                <span class="angle-name">DEPTH</span>
+                <span class="angle-val">32MM</span>
+              </div>
+            </div>
+
+            <div class="card-metric">
+              <span class="metric-val">3D GYRO</span>
+              <span class="metric-label">Coordinate Matrix</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- Footer Telemetry HUD -->
+    <footer class="footer-hud" id="footerHud">
+      <div class="hud-item">
+        <span class="hud-label">COORDINATES</span>
+        <span class="hud-val" id="hudCoords">X: 0000 | Y: 0000</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">VELOCITY</span>
+        <span class="hud-val" id="hudVelocity">000 PX/S</span>
+      </div>
+      <div class="hud-item center-hud">
+        <span class="hud-ring-indicator"></span>
+        <span class="hud-val" id="hudState">INTERACTIVE CANVAS READY</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">ENGINE</span>
+        <span class="hud-val">GSAP • VITE • VANILLA</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
