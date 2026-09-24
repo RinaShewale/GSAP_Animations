@@ -5,12 +5,6 @@ import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-/**
- * Pure Escape / Audira Footer Component
- * Uses the exact same theme: warm linen, rich espresso typography,
- * earth gray text, and ambient acoustic glow.
- * Fully responsive across mobile, tablet, and desktop viewports.
- */
 export const Footer = ({
   brandName = "AUDIRA",
   tagline = "Pure sound, sculpted for the modern listener.",
@@ -57,7 +51,8 @@ export const Footer = ({
       const navColumns = footer.querySelectorAll('.lg\\:col-span-7 > div');
       const giantWordmark = footer.querySelector('h2');
       const legalRow = footer.querySelector('.pt-10 .border-t');
-      const ambientGlow = footer.querySelector('.blur-\\[120px\\]');
+      const ambientGlow = footer.querySelector('#footer-ambient-glow');
+      const isMobile = window.innerWidth < 768;
 
       // 1. SplitText for Brand Title
       if (brandHeading) {
@@ -66,7 +61,7 @@ export const Footer = ({
         });
       }
 
-      // 2. Entrance Timeline: Triggers when Footer scrolls into view
+      // 2. Entrance Timeline
       const entranceTl = gsap.timeline({
         scrollTrigger: {
           trigger: footer,
@@ -75,7 +70,6 @@ export const Footer = ({
         },
       });
 
-      // Bottom ambient glow expands
       if (ambientGlow) {
         entranceTl.fromTo(
           ambientGlow,
@@ -85,7 +79,6 @@ export const Footer = ({
         );
       }
 
-      // Brand letters masked slide-up
       if (brandSplit?.chars) {
         entranceTl.from(
           brandSplit.chars,
@@ -100,7 +93,6 @@ export const Footer = ({
         );
       }
 
-      // Mission description fade & slide
       if (missionText) {
         entranceTl.from(
           missionText,
@@ -114,7 +106,6 @@ export const Footer = ({
         );
       }
 
-      // Swiss engineering pill badge pop
       if (swissBadge) {
         entranceTl.from(
           swissBadge,
@@ -128,7 +119,6 @@ export const Footer = ({
         );
       }
 
-      // Navigation columns & links cascade
       if (navColumns.length > 0) {
         navColumns.forEach((col, idx) => {
           const title = col.querySelector('h4');
@@ -163,7 +153,6 @@ export const Footer = ({
         });
       }
 
-      // Giant background wordmark wipe from its overflow-hidden parent
       if (giantWordmark) {
         entranceTl.from(
           giantWordmark,
@@ -177,7 +166,6 @@ export const Footer = ({
         );
       }
 
-      // Legal & copyright row subtle appearance
       if (legalRow) {
         entranceTl.from(
           legalRow,
@@ -191,14 +179,14 @@ export const Footer = ({
         );
       }
 
-      // 3. Subtle Parallax on Giant Wordmark as user reaches end of page
+      // 3. Subtle Parallax on Giant Wordmark (0.3s on mobile, 1.2s on desktop)
       if (giantWordmark) {
         gsap.to(giantWordmark, {
           scrollTrigger: {
             trigger: footer,
             start: 'top bottom',
             end: 'bottom bottom',
-            scrub: 1.2,
+            scrub: isMobile ? 0.3 : 1.2,
           },
           y: -25,
           ease: 'none',
@@ -218,19 +206,17 @@ export const Footer = ({
       ref={footerRef}
       className="relative w-full bg-[var(--color-bg,#F7F2EB)] text-[var(--color-dark,#5A3622)] border-t border-[#E5DCD2] pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 overflow-hidden select-none font-sans"
     >
-      
-      {/* ========================================================
-          AMBIENT STUDIO LIGHTING GLOW
-      ======================================================== */}
+      {/* AMBIENT STUDIO LIGHTING GLOW */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[320px] sm:w-[500px] lg:w-[600px] h-[220px] sm:h-[300px] rounded-full bg-[var(--color-ambient,#EADCCB)] opacity-50 blur-[120px]" />
+        <div 
+          id="footer-ambient-glow"
+          className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[320px] sm:w-[500px] lg:w-[600px] h-[220px] sm:h-[300px] rounded-full bg-[var(--color-ambient,#EADCCB)] opacity-50 blur-[40px] md:blur-[120px]" 
+        />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-14">
         
-        {/* ========================================================
-            TOP ROW: BRAND COLUMN & NAVIGATION
-        ======================================================== */}
+        {/* TOP ROW: BRAND COLUMN & NAVIGATION */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 pb-12 sm:pb-16 border-b border-[#E5DCD2]">
           
           {/* Brand & Editorial Mission */}
@@ -272,19 +258,15 @@ export const Footer = ({
 
         </div>
 
-        {/* ========================================================
-            BOTTOM ROW: GIANT EDITORIAL WORDMARK & LEGAL
-        ======================================================== */}
+        {/* BOTTOM ROW: GIANT WORDMARK & LEGAL */}
         <div className="pt-10 space-y-6 sm:space-y-8">
           
-          {/* Giant Background Wordmark echoing the editorial poster aesthetic */}
           <div className="overflow-hidden">
-            <h2 className="text-[14vw] lg:text-[13vw] font-black uppercase tracking-[-0.04em] leading-none text-[#5A3622]/[0.08] select-none text-center whitespace-nowrap">
+            <h2 className="text-[14vw] lg:text-[13vw] font-black uppercase tracking-[-0.04em] leading-none text-[#5A3622]/[0.08] select-none text-center whitespace-nowrap transform-gpu">
               {brandName}
             </h2>
           </div>
 
-          {/* Copyright & Links */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-xs sm:text-sm text-[var(--color-para,#645A51)] border-t border-[#E5DCD2]/60 pt-6 text-center sm:text-left">
             <p>© {new Date().getFullYear()} {brandName} Acoustics Inc. All rights reserved.</p>
             
@@ -304,7 +286,6 @@ export const Footer = ({
         </div>
 
       </div>
-
     </footer>
   );
 };

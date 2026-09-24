@@ -18,7 +18,7 @@ const About = () => {
       const paragraph = section.querySelector('p');
       const button = section.querySelector('button');
       const landingSpotlight = section.querySelector('#headphone-landing-s2 div');
-      const ambientGlow = section.querySelector('.blur-\\[100px\\]');
+      const ambientGlow = section.querySelector('#about-ambient-glow');
       const featureCards = section.querySelectorAll('.feature-card');
       const featureBorder = section.querySelector('.border-t');
 
@@ -138,7 +138,7 @@ const About = () => {
         );
       }
 
-      // 3. Multi-Plane Parallax (gentler on mobile so content doesn't collide)
+      // 3. Multi-Plane Parallax (gentle on mobile, original on desktop)
       const leftCol = section.querySelector('.max-w-xl');
       const isMobile = window.innerWidth < 768;
 
@@ -148,7 +148,7 @@ const About = () => {
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.2,
+            scrub: isMobile ? 0.3 : 1.2,
           },
           y: isMobile ? -10 : -30,
           ease: 'none',
@@ -161,7 +161,7 @@ const About = () => {
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.5,
+            scrub: isMobile ? 0.3 : 1.5,
           },
           y: isMobile ? -10 : -20,
           ease: 'none',
@@ -185,7 +185,10 @@ const About = () => {
     >
       {/* Studio Lighting */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
-        <div className="w-[300px] sm:w-[450px] md:w-[600px] h-[300px] sm:h-[450px] md:h-[600px] rounded-full bg-[var(--color-white)]/60 blur-[80px] sm:blur-[100px]" />
+        <div 
+          id="about-ambient-glow"
+          className="w-[300px] sm:w-[450px] md:w-[600px] h-[300px] sm:h-[450px] md:h-[600px] rounded-full bg-[var(--color-white)]/60 blur-[60px] md:blur-[100px]" 
+        />
       </div>
 
       {/* Main Content */}
@@ -202,7 +205,7 @@ const About = () => {
             Engineered for clarity, comfort, and immersive sound — Audira redefines your listening experience with style and performance in perfect harmony.
           </p>
 
-          {/* CTA Button with guaranteed brand fallback color */}
+          {/* CTA Button */}
           <div className="flex items-center gap-4">
             <button className="group relative px-6 sm:px-7 py-2.5 sm:py-3 bg-[var(--color-button,#2e1a0f)] text-[var(--color-white,#faf6f0)] text-xs sm:text-sm font-medium tracking-wide rounded-xl shadow-[0_10px_25px_rgba(46,26,15,0.25)] hover:shadow-[0_15px_30px_rgba(46,26,15,0.35)] hover:bg-[#1a0f08] transition-all duration-300 transform active:scale-95 cursor-pointer overflow-hidden flex items-center gap-2.5 sm:gap-3">
               <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
@@ -222,15 +225,15 @@ const About = () => {
           id="headphone-landing-s2"
           className="relative w-full h-[230px] sm:h-[300px] lg:h-[360px] flex items-center justify-center pointer-events-none my-2 sm:my-0"
         >
-          <div className="w-[220px] sm:w-[320px] h-[220px] sm:h-[320px] rounded-full bg-[var(--color-white)]/50 blur-[60px] sm:blur-[70px]" />
+          <div className="w-[220px] sm:w-[320px] h-[220px] sm:h-[320px] rounded-full bg-[var(--color-white)]/50 blur-[50px] md:blur-[70px]" />
         </div>
 
       </div>
 
-      {/* Feature Cards (Compact on mobile so they don't push beyond the viewport) */}
+      {/* Feature Cards */}
       <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-4 pt-4 sm:pt-6 border-t border-[var(--color-dark)]/10">
         
-        <div className="feature-card group relative backdrop-blur-md bg-[var(--color-white)]/25 border border-[var(--color-dark)]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between">
+        <div className="feature-card group relative backdrop-blur-sm md:backdrop-blur-md bg-[var(--color-white)]/25 border border-[var(--color-dark)]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between transform-gpu">
           <div className="flex items-center justify-between mb-1.5 sm:mb-2">
             <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[var(--color-dark)]/40 uppercase">01 // Acoustics</span>
             <div className="w-2 h-2 rounded-full bg-[var(--color-primary)]/40" />
@@ -241,7 +244,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="feature-card group relative backdrop-blur-md bg-[var(--color-white)]/25 border border-[var(--color-dark)]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between">
+        <div className="feature-card group relative backdrop-blur-sm md:backdrop-blur-md bg-[var(--color-white)]/25 border border-[var(--color-dark)]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between transform-gpu">
           <div className="flex items-center justify-between mb-1.5 sm:mb-2">
             <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[var(--color-dark)]/40 uppercase">02 // Ergonomics</span>
             <div className="w-2 h-2 rounded-full bg-[var(--color-primary)]/40" />
@@ -252,7 +255,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="feature-card group relative backdrop-blur-md bg-[var(--color-white)]/25 border border-[var(--color-dark)]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between">
+        <div className="feature-card group relative backdrop-blur-sm md:backdrop-blur-md bg-[var(--color-white)]/25 border border-[var(--color-dark)]/15 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between transform-gpu">
           <div className="flex items-center justify-between mb-1.5 sm:mb-2">
             <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[var(--color-dark)]/40 uppercase">03 // Endurance</span>
             <div className="w-2 h-2 rounded-full bg-[var(--color-primary)]/40" />

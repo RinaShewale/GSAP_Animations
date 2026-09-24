@@ -15,7 +15,7 @@ const BeatCraft = () => {
     const ctx = gsap.context(() => {
       const section = sectionRef.current
       const heading = section.querySelector('h1')
-      const lightGlow = section.querySelector('.blur-\\[100px\\]')
+      const lightGlow = section.querySelector('#beatcraft-ambient-glow')
       const videoWrapper = section.querySelector('.aspect-video')
       const video = section.querySelector('video')
       const paragraph = section.querySelector('p')
@@ -114,7 +114,7 @@ const BeatCraft = () => {
         )
       }
 
-      // 3. Multi-Layer Depth Parallax (Gentler on mobile to prevent overlap)
+      // 3. Multi-Layer Depth Parallax (0.3s snappy scrub on mobile, original scrub on desktop)
       const isMobile = window.innerWidth < 768
 
       if (heading) {
@@ -123,7 +123,7 @@ const BeatCraft = () => {
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1,
+            scrub: isMobile ? 0.3 : 1,
           },
           y: isMobile ? -15 : -40,
           ease: 'none',
@@ -136,7 +136,7 @@ const BeatCraft = () => {
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.6,
+            scrub: isMobile ? 0.3 : 1.6,
           },
           y: isMobile ? -20 : -60,
           ease: 'none',
@@ -149,7 +149,7 @@ const BeatCraft = () => {
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.2,
+            scrub: isMobile ? 0.3 : 1.2,
           },
           y: isMobile ? -15 : -30,
           ease: 'none',
@@ -172,12 +172,15 @@ const BeatCraft = () => {
       className="relative w-full min-h-screen bg-[var(--color-bg)] text-[var(--color-dark)] flex flex-col justify-between px-5 sm:px-12 md:px-16 lg:px-24 py-8 md:py-12 selection:bg-[var(--color-primary)] selection:text-[var(--color-white)] overflow-visible"
     >
       
-      {/* 1. Studio Lighting Effect (overflow-hidden prevents mobile horizontal scroll) */}
+      {/* 1. Studio Lighting Effect */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
-        <div className="w-[300px] sm:w-[550px] md:w-[750px] h-[300px] sm:h-[550px] md:h-[750px] rounded-full bg-[var(--color-white)]/60 blur-[80px] sm:blur-[100px]" />
+        <div 
+          id="beatcraft-ambient-glow"
+          className="w-[300px] sm:w-[550px] md:w-[750px] h-[300px] sm:h-[550px] md:h-[750px] rounded-full bg-[var(--color-white)]/60 blur-[40px] md:blur-[100px]" 
+        />
       </div>
 
-      {/* 2. Top Typography: MASTERBEATS (Single-line on all screens) */}
+      {/* 2. Top Typography */}
       <div className="relative z-10 w-full text-center select-none pt-2 sm:pt-4">
         <h1 className="font-extrabold uppercase tracking-tight text-[var(--color-dark)] leading-[0.85] text-4xl min-[380px]:text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem]">
           BEATCRAFT
@@ -188,13 +191,13 @@ const BeatCraft = () => {
       <div className="relative z-10 w-full flex-1 flex flex-col lg:flex-row justify-between items-center lg:items-end gap-6 sm:gap-8 my-auto py-4 sm:py-8">
         
         {/* Left: Video Card */}
-        <div className="w-full max-w-[340px] sm:max-w-none sm:w-[340px] md:w-[400px] lg:w-[440px] aspect-video rounded-2xl overflow-hidden bg-black/5 shadow-2xl self-center lg:self-start mt-2 sm:mt-6 transition-transform">
+        <div className="w-full max-w-[340px] sm:max-w-none sm:w-[340px] md:w-[400px] lg:w-[440px] aspect-video rounded-2xl overflow-hidden bg-black/5 shadow-2xl self-center lg:self-start mt-2 sm:mt-6 transition-transform transform-gpu">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transform-gpu"
             src="/images/Headphone.mp4"
             poster="/images/beats-poster.jpg"
           >
@@ -202,12 +205,12 @@ const BeatCraft = () => {
           </video>
         </div>
 
-        {/* Mobile Spacer & Soft Spotlight: Gives the big tilted headphone a dedicated visual zone */}
+        {/* Mobile Spacer & Soft Spotlight */}
         <div 
           id="headphone-landing-s3" 
           className="w-full h-[180px] sm:h-[220px] lg:hidden flex items-center justify-center pointer-events-none -my-2"
         >
-          <div className="w-[200px] sm:w-[260px] h-[200px] sm:h-[260px] rounded-full bg-[var(--color-white)]/40 blur-[60px]" />
+          <div className="w-[200px] sm:w-[260px] h-[200px] sm:h-[260px] rounded-full bg-[var(--color-white)]/40 blur-[40px] sm:blur-[60px]" />
         </div>
 
         {/* Right: Editorial Text */}

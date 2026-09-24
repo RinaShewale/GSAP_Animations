@@ -7,7 +7,6 @@ const PRODUCTS = [
         price: 4499,
         color: "Forest Green & Brass",
         image: "/images/black.png",
-        // Optional: fine-tune individual scale if needed (e.g., "scale-95")
     },
     {
         id: "audira-pulse",
@@ -15,7 +14,7 @@ const PRODUCTS = [
         price: 7999,
         isCenterHero: true,
         color: "Caramel Leather & Copper",
-        image: "/images/brown4.png", // Preserves height & aspect ratio for GSAP target
+        image: "/images/brown4.png",
     },
     {
         id: "audira-max-pro",
@@ -40,7 +39,7 @@ const TopPicks = ({
         >
             {/* Ambient Lighting */}
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                <div className="w-[300px] sm:w-[500px] md:w-[600px] h-[300px] sm:h-[450px] md:h-[500px] rounded-full bg-white/40 blur-[100px] sm:blur-[130px]" />
+                <div className="w-[300px] sm:w-[500px] md:w-[600px] h-[300px] sm:h-[450px] md:h-[500px] rounded-full bg-white/40 blur-[40px] md:blur-[130px]" />
             </div>
 
             <div className="relative z-10 max-w-5xl mx-auto">
@@ -52,7 +51,7 @@ const TopPicks = ({
                 </div>
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6 items-end justify-items-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6 items-center md:items-end justify-items-center">
                     {products.map((item) => {
                         const isCenter = item.isCenterHero || item.id === "audira-pulse";
                         const isSelected = activeId === item.id;
@@ -71,19 +70,19 @@ const TopPicks = ({
                                 {/* Slot Container */}
                                 <div
                                     id={isCenter ? "headphone-target-s5" : undefined}
-                                    className={`relative flex items-center justify-center transition-transform duration-500 ease-out max-w-full ${
+                                    className={`relative flex items-center justify-center transition-transform duration-500 ease-out max-w-full aspect-square ${
                                         isCenter
-                                            ? "w-72 sm:w-88 md:w-80 lg:w-[26rem] scale-105 md:scale-110"
-                                            : "w-44 sm:w-52 md:w-48 lg:w-56" // Scaled down to match center hero visual scale
+                                            ? "w-32 sm:w-40 md:w-80 lg:w-[26rem] md:scale-110"
+                                            : "w-28 sm:w-36 md:w-48 lg:w-56"
                                     }`}
                                 >
                                     <img
                                         src={item.image}
                                         alt={item.name}
-                                        className={`relative z-10 w-full h-auto object-contain transition-transform duration-500 ease-out group-hover:-translate-y-3 drop-shadow-[0_22px_24px_rgba(40,22,10,0.30)] ${
+                                        className={`relative z-10 w-full h-full object-contain transition-transform duration-500 ease-out group-hover:-translate-y-3 drop-shadow-[0_22px_24px_rgba(40,22,10,0.30)] transform-gpu ${
                                             isCenter ? "opacity-0 pointer-events-none" : ""
                                         } ${item.imgClass || ""}`}
-                                        loading="lazy"
+                                        loading={isCenter ? "eager" : "lazy"}
                                     />
 
                                     {/* Ground shadow beneath card */}
@@ -91,7 +90,7 @@ const TopPicks = ({
                                 </div>
 
                                 {/* Product Info */}
-                                <div className="mt-8 text-center flex flex-col items-center">
+                                <div className="mt-6 md:mt-8 text-center flex flex-col items-center">
                                     <h3 className="text-base sm:text-lg font-semibold text-[#281b12] tracking-normal transition-colors group-hover:text-[#4a2e1b]">
                                         {item.name}
                                     </h3>

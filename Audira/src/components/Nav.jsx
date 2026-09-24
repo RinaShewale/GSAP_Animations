@@ -8,8 +8,11 @@ const Nav = () => {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
 
-      // When scrolling down, nav goes up (hides). When scrolling up, nav comes back down (shows).
+      // Only toggle state if scroll difference exceeds threshold to avoid unnecessary re-renders
+      if (Math.abs(delta) < 8) return;
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsVisible(false);
       } else {
@@ -28,7 +31,7 @@ const Nav = () => {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 z-50 w-full transition-transform duration-300 ease-in-out transform-gpu will-change-transform ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
@@ -42,7 +45,6 @@ const Nav = () => {
           <span className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--color-button)] group-hover:text-[var(--color-primary)] transition-colors duration-200">
             Audira
           </span>
-          {/* Subtle acoustic accent dot */}
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mb-2" />
         </a>
 

@@ -5,6 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Prevents mobile address bar resize from freezing scroll
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+  limitCallbacks: true,
+})
+
 import Nav from './components/Nav'
 import HeadPhone from './pages/HeadPhone'
 import About from './pages/About'
@@ -21,6 +27,7 @@ const App = () => {
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      syncTouch: false, // Ensures native touch momentum scrolling on mobile
     })
 
     lenis.on('scroll', ScrollTrigger.update)
@@ -138,7 +145,7 @@ const App = () => {
 
       if (!headphone || !s2 || !s3 || !s4 || !s5) return
 
-      gsap.set(headphone, { clearProps: 'all' })
+      gsap.set(headphone, { clearProps: 'all', force3D: true })
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -146,17 +153,18 @@ const App = () => {
           start: 'top bottom',
           endTrigger: s5,
           end: 'center center',
-          scrub: 1.2,
-          invalidateOnRefresh: true,
+          scrub: 0.4, // Responsive 0.4s scrub for touch devices
+          fastScrollEnd: true,
+          preventOverlaps: true,
         },
       })
 
-      // STEP 1: Hero -> Section 2 (Centered horizontally on mobile)
+      // STEP 1: Hero -> Section 2
       tl.to(headphone, {
         x: () => getPos(s2, 0.5, 0.38).x,
         y: () => getPos(s2, 0.5, 0.38).y,
         rotate: 90,
-        scale: 0.95,
+        scale: 0.8,
         ease: 'power1.inOut',
         duration: 1,
       })
@@ -171,7 +179,7 @@ const App = () => {
         x: () => getPos(s3, 0.5, 0.5).x,
         y: () => getPos(s3, 0.5, 0.5).y,
         rotate: 30,
-        scale: 0.95,
+        scale: 0.8,
         ease: 'power1.inOut',
         duration: 1,
       })
@@ -182,17 +190,17 @@ const App = () => {
         x: () => getPos(s4, 0.5, 0.5).x,
         y: () => getPos(s4, 0.5, 0.5).y,
         rotate: 0,
-        scale: 0.95,
+        scale: 0.8,
         ease: 'power1.inOut',
         duration: 1,
       })
 
-      // STEP 4: Section 4 -> Section 5 (TopPicks: Big scale to match Audira One & Audira Max Pro)
+      // STEP 4: Section 4 -> Section 5 (TopPicks)
       .to(headphone, {
-        x: () => getPos(s5, 0.5, 0.5).x,
-        y: () => getPos(s5, 0.5, 0.5).y,
+        x: () => getPos(s5, 0.5, 0.48).x,
+        y: () => getPos(s5, 0.5, 0.48).y,
         rotate: 0,
-        scale: 0.95,
+        scale: 0.78,
         ease: 'power1.inOut',
         duration: 1,
       })

@@ -5,22 +5,16 @@ import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-/**
- * Reusable Photo Card with uniform white frame,
- * soft rounded corners, and warm ambient drop-shadow.
- * Supports image (default) or video media.
- */
 export const PhotoCard = ({
   src,
   alt = "Headphone acoustic experience",
   className = "",
   aspectRatio = "aspect-[4/3]",
-  type = "image", // Default to "image" so image cards aren't treated as videos
+  type = "image",
   poster,
 }) => {
   const videoRef = useRef(null);
 
-  // Fix: Programmatically enforce muted and playsInline for autoplay policy compliance
   useEffect(() => {
     if (type === "video" && videoRef.current) {
       const video = videoRef.current;
@@ -30,7 +24,6 @@ export const PhotoCard = ({
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
-          // Autoplay prevented by browser or user policy
           console.warn("Video autoplay prevented:", error);
         });
       }
@@ -39,7 +32,7 @@ export const PhotoCard = ({
 
   return (
     <div
-      className={`relative bg-white p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl shadow-[0_20px_45px_-12px_rgba(50,30,15,0.22),0_6px_16px_rgba(0,0,0,0.06)] border border-black/[0.04] will-change-transform ${className}`}
+      className={`relative bg-white p-2.5 sm:p-3 rounded-2xl sm:rounded-3xl shadow-[0_20px_45px_-12px_rgba(50,30,15,0.22),0_6px_16px_rgba(0,0,0,0.06)] border border-black/[0.04] transform-gpu will-change-transform ${className}`}
     >
       <div className={`overflow-hidden rounded-xl sm:rounded-2xl bg-[#ebe3d9] ${aspectRatio} relative`}>
         {type === "video" ? (
@@ -47,14 +40,13 @@ export const PhotoCard = ({
             ref={videoRef}
             poster={poster}
             aria-label={alt}
-            className="w-full h-full object-cover block will-change-transform"
+            className="w-full h-full object-cover block transform-gpu will-change-transform"
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
           >
-            {/* Using <source> tag for broader codec compatibility */}
             <source src={src} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -62,11 +54,10 @@ export const PhotoCard = ({
           <img
             src={src}
             alt={alt}
-            className="w-full h-full object-cover block will-change-transform"
+            className="w-full h-full object-cover block transform-gpu will-change-transform"
             loading="lazy"
           />
         )}
-        {/* Soft studio light reflex overlay */}
         <div className="absolute inset-0 bg-gradient-to-tr from-black/10 via-transparent to-white/20 pointer-events-none opacity-60" />
       </div>
     </div>
@@ -76,7 +67,7 @@ export const PhotoCard = ({
 const DEFAULT_IMAGES = {
   heroPod: {
     type: "video",
-    src: "/images/Headphone2.mp4", // Ensure this path exists in your /public directory or use a valid URL
+    src: "/images/Headphone2.mp4",
     poster: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=85",
     alt: "Listener immersed in warm ambient acoustic pod",
   },
@@ -92,9 +83,6 @@ const DEFAULT_IMAGES = {
   },
 };
 
-/**
- * Pure Escape Section
- */
 export const PureEscapeSection = ({
   headline = ["PURE", "ESCAPE"],
   paragraph1 = "Step into a world where every note feels alive. Audira headphones are engineered to create a sound experience that surrounds you—deep, rich, and breathtaking.",
@@ -119,20 +107,18 @@ export const PureEscapeSection = ({
       const paragraphsContainer = section.querySelector('.space-y-5');
       const ambientLights = section.querySelectorAll('.rounded-full');
       const cardMedias = section.querySelectorAll('img, video');
+      const isMobile = window.innerWidth < 768;
 
-      // Inner card elements (handles entrance transforms cleanly without conflicting with outer parallax scrub)
       const heroCardInner = heroPodRef.current?.firstElementChild;
       const topLeftCardInner = topLeftRef.current?.firstElementChild;
       const bottomLeftCardInner = bottomLeftRef.current?.firstElementChild;
 
-      // Enable 3D hardware acceleration and perspective on card wrappers
       gsap.set([heroPodRef.current, topLeftRef.current, bottomLeftRef.current], {
         transformPerspective: 1200,
         transformStyle: 'preserve-3d',
         force3D: true,
       });
 
-      // 1. SplitText Configurations (safely initialized)
       try {
         if (heading && SplitText) {
           headlineSplit = SplitText.create(heading, {
@@ -151,7 +137,7 @@ export const PureEscapeSection = ({
         console.warn('SplitText plugin error:', err);
       }
 
-      // 2. Cinematic Entrance Timeline (Triggers when entering viewport)
+      // Entrance Timeline
       const entranceTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -209,7 +195,6 @@ export const PureEscapeSection = ({
         );
       }
 
-      // Cards Entrance: reveal inner card containers so outer wrapper parallax stays glitch-free
       if (heroCardInner) {
         entranceTl.from(
           heroCardInner,
@@ -254,9 +239,7 @@ export const PureEscapeSection = ({
         );
       }
 
-      // 3. Multi-Plane 3D Parallax Scrubbing (Silky-smooth continuous scroll response)
-      
-      // Hero Pod Card (Centerpiece focal anchor)
+      // Parallax Scrubbing (0.3s on mobile, original scrub on desktop)
       if (heroPodRef.current) {
         gsap.fromTo(
           heroPodRef.current,
@@ -268,23 +251,22 @@ export const PureEscapeSection = ({
             rotationX: -2,
           },
           {
-            y: -75,
-            x: 15,
-            rotationZ: 4.5,
-            rotationY: -4,
-            rotationX: 3,
+            y: isMobile ? -35 : -75,
+            x: isMobile ? 8 : 15,
+            rotationZ: isMobile ? 2.5 : 4.5,
+            rotationY: isMobile ? -2 : -4,
+            rotationX: isMobile ? 1.5 : 3,
             ease: 'none',
             scrollTrigger: {
               trigger: section,
               start: 'top bottom',
               end: 'bottom top',
-              scrub: 1.2,
+              scrub: isMobile ? 0.3 : 1.2,
             },
           }
         );
       }
 
-      // Top-Left Card (Background floating layer - drifts higher and twists inwards)
       if (topLeftRef.current) {
         gsap.fromTo(
           topLeftRef.current,
@@ -296,23 +278,22 @@ export const PureEscapeSection = ({
             rotationX: 3,
           },
           {
-            y: -105,
-            x: -18,
-            rotationZ: -12,
-            rotationY: 6,
-            rotationX: -4,
+            y: isMobile ? -45 : -105,
+            x: isMobile ? -10 : -18,
+            rotationZ: isMobile ? -6 : -12,
+            rotationY: isMobile ? 3 : 6,
+            rotationX: isMobile ? -2 : -4,
             ease: 'none',
             scrollTrigger: {
               trigger: section,
               start: 'top bottom',
               end: 'bottom top',
-              scrub: 1.6,
+              scrub: isMobile ? 0.3 : 1.6,
             },
           }
         );
       }
 
-      // Bottom-Left Card (Foreground high-speed parallax layer - sweeps dynamically)
       if (bottomLeftRef.current) {
         gsap.fromTo(
           bottomLeftRef.current,
@@ -324,23 +305,22 @@ export const PureEscapeSection = ({
             rotationX: -3,
           },
           {
-            y: -135,
-            x: 16,
-            rotationZ: 13,
-            rotationY: -6,
-            rotationX: 5,
+            y: isMobile ? -55 : -135,
+            x: isMobile ? 8 : 16,
+            rotationZ: isMobile ? 7 : 13,
+            rotationY: isMobile ? -3 : -6,
+            rotationX: isMobile ? 2 : 5,
             ease: 'none',
             scrollTrigger: {
               trigger: section,
               start: 'top bottom',
               end: 'bottom top',
-              scrub: 1.9,
+              scrub: isMobile ? 0.3 : 1.9,
             },
           }
         );
       }
 
-      // 4. Internal Lens / Window Parallax (Images and video slide inside their frames)
       if (cardMedias.length > 0) {
         cardMedias.forEach((media, idx) => {
           gsap.fromTo(
@@ -354,14 +334,13 @@ export const PureEscapeSection = ({
                 trigger: section,
                 start: 'top bottom',
                 end: 'bottom top',
-                scrub: 1.4 + idx * 0.2,
+                scrub: isMobile ? 0.3 : (1.4 + idx * 0.2),
               },
             }
           );
         });
       }
 
-      // 5. Dynamic Ambient Glow Tracking (Warm studio spotlight tracks scroll position)
       if (ambientLights.length > 0) {
         gsap.to(ambientLights, {
           y: -75,
@@ -372,12 +351,11 @@ export const PureEscapeSection = ({
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 2.0,
+            scrub: isMobile ? 0.3 : 2.0,
           },
         });
       }
 
-      // 6. Text Column Parallax
       if (textColumnRef.current) {
         gsap.to(textColumnRef.current, {
           y: -35,
@@ -386,7 +364,7 @@ export const PureEscapeSection = ({
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.4,
+            scrub: isMobile ? 0.3 : 1.4,
           },
         });
       }
@@ -401,20 +379,20 @@ export const PureEscapeSection = ({
 
   return (
     <section
-      id="section5"
+      id="section6"
       ref={sectionRef}
       className="relative w-full min-h-screen bg-[var(--color-bg,#F7F2EB)] flex items-center justify-center px-4 sm:px-8 lg:px-14 py-16 lg:py-24 overflow-hidden select-none font-sans"
     >
       {/* AMBIENT STUDIO LIGHTING GLOW */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[480px] sm:w-[700px] lg:w-[920px] h-[480px] sm:h-[700px] lg:h-[920px] rounded-full bg-white/75 blur-[130px]" />
-        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[500px] lg:w-[650px] h-[340px] sm:h-[500px] lg:h-[650px] rounded-full bg-[var(--color-ambient,#EADCCB)] opacity-60 blur-[100px]" />
-        <div className="absolute top-1/3 left-1/4 w-[280px] h-[280px] rounded-full bg-[#FF7D29]/15 blur-[90px]" />
+        <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[480px] sm:w-[700px] lg:w-[920px] h-[480px] sm:h-[700px] lg:h-[920px] rounded-full bg-white/75 blur-[45px] md:blur-[130px]" />
+        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[500px] lg:w-[650px] h-[340px] sm:h-[500px] lg:h-[650px] rounded-full bg-[var(--color-ambient,#EADCCB)] opacity-60 blur-[40px] md:blur-[100px]" />
+        <div className="absolute top-1/3 left-1/4 w-[280px] h-[280px] rounded-full bg-[#FF7D29]/15 blur-[35px] md:blur-[90px]" />
       </div>
 
       {/* MAIN CONTENT GRID */}
       <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        {/* LEFT COLUMN: 3-IMAGE/VIDEO OVERLAPPING COMPOSITION */}
+        {/* LEFT COLUMN */}
         <div className="lg:col-span-7 relative w-full h-[460px] sm:h-[540px] md:h-[600px] lg:h-[620px] flex items-center justify-center order-2 lg:order-1 [perspective:1200px]">
           {/* 1. HERO POD CARD (Video) */}
           <div
@@ -460,7 +438,7 @@ export const PureEscapeSection = ({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: HEADLINE & PARAGRAPHS */}
+        {/* RIGHT COLUMN */}
         <div
           ref={textColumnRef}
           className="lg:col-span-5 flex flex-col justify-center text-left space-y-6 lg:space-y-8 pl-0 lg:pl-4 order-1 lg:order-2"

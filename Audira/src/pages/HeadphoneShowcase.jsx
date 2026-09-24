@@ -4,9 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Reusable Photo Card Component
- */
 export const PhotoCard = ({
   src = "/images/headphone1.jpg",
   alt = "Headphones desk setup",
@@ -15,7 +12,7 @@ export const PhotoCard = ({
 }) => {
   return (
     <div
-      className={`inline-block bg-white p-2 sm:p-2.5 md:p-3 rounded-2xl sm:rounded-3xl shadow-[0_20px_40px_-10px_rgba(45,30,15,0.22),0_6px_14px_rgba(0,0,0,0.06)] border border-black/[0.03] transition-transform duration-300 ${className}`}
+      className={`inline-block bg-white p-2 sm:p-2.5 md:p-3 rounded-2xl sm:rounded-3xl shadow-[0_20px_40px_-10px_rgba(45,30,15,0.22),0_6px_14px_rgba(0,0,0,0.06)] border border-black/[0.03] transition-transform duration-300 transform-gpu ${className}`}
     >
       <div className={`overflow-hidden rounded-xl sm:rounded-2xl bg-[#e5ded6] ${aspectRatio}`}>
         <img
@@ -143,14 +140,14 @@ const HeadphoneShowcase = ({
         );
       }
 
-      // 2. Continuous Multi-Plane Scrubbed Parallax
+      // 2. Continuous Multi-Plane Scrubbed Parallax (Responsive scrub on mobile)
       if (topLeftCard) {
         gsap.to(topLeftCard, {
           scrollTrigger: {
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.2,
+            scrub: isMobile ? 0.3 : 1.2,
           },
           y: isMobile ? -20 : -45,
           x: isMobile ? -8 : -15,
@@ -165,7 +162,7 @@ const HeadphoneShowcase = ({
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.8,
+            scrub: isMobile ? 0.3 : 1.8,
           },
           y: isMobile ? -30 : -75,
           x: isMobile ? 6 : 12,
@@ -180,7 +177,7 @@ const HeadphoneShowcase = ({
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 1.4,
+            scrub: isMobile ? 0.3 : 1.4,
           },
           y: isMobile ? -25 : -55,
           x: isMobile ? 10 : 20,
@@ -200,13 +197,13 @@ const HeadphoneShowcase = ({
       ref={sectionRef}
       className="relative w-full min-h-[540px] sm:min-h-[660px] md:min-h-[740px] bg-[var(--color-bg,#ece5dd)] flex items-center justify-center px-4 sm:px-8 py-8 sm:py-16 md:py-20 overflow-visible select-none"
     >
-      {/* 1. Studio Lighting Glow (overflow-hidden prevents mobile horizontal bleed) */}
+      {/* 1. Studio Lighting Glow */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
-        <div className="w-[340px] sm:w-[560px] md:w-[780px] h-[340px] sm:h-[560px] md:h-[780px] rounded-full bg-white/70 blur-[90px] sm:blur-[150px]" />
-        <div className="absolute w-[240px] sm:w-[440px] md:w-[580px] h-[240px] sm:h-[440px] md:h-[580px] rounded-full bg-[#dfd2c4]/60 blur-[70px] sm:blur-[120px]" />
+        <div className="w-[340px] sm:w-[560px] md:w-[780px] h-[340px] sm:h-[560px] md:h-[780px] rounded-full bg-white/70 blur-[40px] md:blur-[150px]" />
+        <div className="absolute w-[240px] sm:w-[440px] md:w-[580px] h-[240px] sm:h-[440px] md:h-[580px] rounded-full bg-[#dfd2c4]/60 blur-[35px] md:blur-[120px]" />
       </div>
 
-      {/* 2. Composition Stage: 3 Cards Framing the Center Headphone */}
+      {/* 2. Composition Stage */}
       <div className="relative z-10 w-full max-w-5xl mx-auto h-[500px] sm:h-[560px] md:h-[620px]">
 
         {/* TOP-LEFT CARD */}
