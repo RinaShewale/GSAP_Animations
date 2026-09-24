@@ -60,7 +60,7 @@ const App = () => {
     const mm = gsap.matchMedia()
 
     // ----------------------------------------------------
-    // 3. DESKTOP (1025px+) — EXACT ORIGINAL CODE UNTOUCHED
+    // 3. DESKTOP (1025px+) — SILKY SMOOTH FORWARD & BACK
     // ----------------------------------------------------
     mm.add('(min-width: 1025px)', () => {
       const headphone = document.querySelector('#headphone')
@@ -72,7 +72,7 @@ const App = () => {
 
       if (!headphone || !s2 || !s3 || !s4 || !s5) return
 
-      gsap.set(headphone, { clearProps: 'all' })
+      gsap.set(headphone, { clearProps: 'all', force3D: true })
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -81,7 +81,6 @@ const App = () => {
           endTrigger: s5,
           end: 'center center',
           scrub: 1.2,
-          invalidateOnRefresh: true,
         },
       })
 
@@ -91,11 +90,12 @@ const App = () => {
         y: () => getPos(s2, 0.72, 0.38).y,
         rotate: 90,
         scale: 1,
-        ease: 'power1.inOut',
+        ease: 'none', // 'none' ensures identical, symmetrical smoothness in both directions
         duration: 1,
       })
       .to(shadow, {
         opacity: 0,
+        ease: 'none',
         duration: 0.4,
       }, 0)
       .to(headphone, { duration: 0.3 })
@@ -106,7 +106,7 @@ const App = () => {
         y: () => getPos(s3, 0.52, 0.52).y,
         rotate: 30,
         scale: 0.95,
-        ease: 'power1.inOut',
+        ease: 'none',
         duration: 1,
       })
       .to(headphone, { duration: 0.3 })
@@ -117,7 +117,7 @@ const App = () => {
         y: () => getPos(s4, 0.5, 0.5).y,
         rotate: 0,
         scale: 0.95,
-        ease: 'power1.inOut',
+        ease: 'none',
         duration: 1,
       })
 
@@ -127,13 +127,13 @@ const App = () => {
         y: () => getPos(s5, 0.5, 0.43).y,
         rotate: 0,
         scale: 0.45,
-        ease: 'power1.inOut',
+        ease: 'none',
         duration: 1,
       })
     })
 
     // ----------------------------------------------------
-    // 4. MOBILE & TABLET (<= 1024px) — GLITCH-FREE RESPONSIVE
+    // 4. MOBILE & TABLET (<= 1024px) — SILKY SMOOTH FORWARD & BACK
     // ----------------------------------------------------
     mm.add('(max-width: 1024px)', () => {
       const headphone = document.querySelector('#headphone')
@@ -153,9 +153,7 @@ const App = () => {
           start: 'top bottom',
           endTrigger: s5,
           end: 'center center',
-          scrub: 0.4, // Responsive 0.4s scrub for touch devices
-          fastScrollEnd: true,
-          preventOverlaps: true,
+          scrub: 0.6, // Perfect balance for smooth forward and reverse scroll tracking
         },
       })
 
@@ -165,11 +163,12 @@ const App = () => {
         y: () => getPos(s2, 0.5, 0.38).y,
         rotate: 90,
         scale: 0.8,
-        ease: 'power1.inOut',
+        ease: 'none',
         duration: 1,
       })
       .to(shadow, {
         opacity: 0,
+        ease: 'none',
         duration: 0.4,
       }, 0)
       .to(headphone, { duration: 0.3 })
@@ -180,7 +179,7 @@ const App = () => {
         y: () => getPos(s3, 0.5, 0.5).y,
         rotate: 30,
         scale: 0.8,
-        ease: 'power1.inOut',
+        ease: 'none',
         duration: 1,
       })
       .to(headphone, { duration: 0.3 })
@@ -191,7 +190,7 @@ const App = () => {
         y: () => getPos(s4, 0.5, 0.5).y,
         rotate: 0,
         scale: 0.8,
-        ease: 'power1.inOut',
+        ease: 'none',
         duration: 1,
       })
 
@@ -201,7 +200,7 @@ const App = () => {
         y: () => getPos(s5, 0.5, 0.48).y,
         rotate: 0,
         scale: 0.78,
-        ease: 'power1.inOut',
+        ease: 'none',
         duration: 1,
       })
     })
