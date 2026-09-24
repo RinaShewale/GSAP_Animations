@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: var(--color-bg);
+  --color-primary: var(--color-primary);
+  --color-dark: var(--color-dark);
+  --color-white: var(--color-white);
+  --color-black: var(--color-black);
+  --color-button: var(--color-button);
+  --color-shadow1: var(--color-shadow1);
+  --color-shadow2: var(--color-shadow2);
+}
+
+
+:root {
+  --color-bg: #d2c2b8; 
+  --color-primary: #897060;      
+  --color-dark: #70543F;   
+  --color-white: #F0E7E2;
+  --color-button: #3e2e23; 
+  --color-para:#2f221a;
+  --color-shadow1: #00000025;
+  --color-shadow2: #0000001a;
+
+  --color-black: #151414;
+
+}
+
+/* Optional: Override in dark mode */
+.dark {
+  --color-bg: #1b1511;
+  --color-white: #d2c2b8;
+}
