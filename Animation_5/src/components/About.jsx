@@ -79,17 +79,17 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative z-30 flex min-h-screen min-h-[100dvh] w-full flex-col items-center justify-center bg-[#fbfbfb] px-4 sm:px-6 md:px-8 py-20 sm:py-28 md:py-32 text-neutral-900 shadow-[0_-25px_50px_rgba(0,0,0,0.06)]"
+      className="relative z-30 flex min-h-screen w-full flex-col items-center justify-center bg-[#fbfbfb] px-6 py-32 text-neutral-900 shadow-[0_-25px_50px_rgba(0,0,0,0.06)]"
     >
-      <div className="flex max-w-4xl flex-col items-center gap-6 sm:gap-8 text-center">
-        <span className="rounded-full border border-neutral-300 bg-neutral-100/80 px-4 sm:px-5 py-1.5 text-[0.65rem] sm:text-[0.7rem] font-medium tracking-[0.25em] sm:tracking-[0.28em] text-neutral-600 uppercase backdrop-blur-sm">
+      <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
+        <span className="rounded-full border border-neutral-300 bg-neutral-100/80 px-5 py-1.5 text-[0.7rem] font-medium tracking-[0.28em] text-neutral-600 uppercase backdrop-blur-sm">
           About
         </span>
 
         <p
           ref={textRef}
           style={{ perspective: '1000px' }}
-          className="text-[clamp(1.35rem,3.8vw,3.4rem)] font-medium leading-[1.3] sm:leading-[1.25] tracking-tight text-neutral-900 select-none"
+          className="text-[clamp(1.85rem,4.2vw,3.4rem)] font-medium leading-[1.25] tracking-tight text-neutral-900 select-none"
         >
           Redefining contemporary silhouettes through uncompromising precision,
           atmospheric narratives, and sculptural tailoring engineered for timeless presence.
